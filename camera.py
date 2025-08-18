@@ -37,3 +37,7 @@ class Camera:
                 break
         self.release()
         cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    cam = Camera()
+    cam.show_stream()

@@ -2,7 +2,7 @@ import sys
 import os
 import threading
 from camera import Camera
-from page_detect import find_largest_quad, four_point_transform
+from page_detect import detect_page
 from storage import save_capture, is_blurry, is_too_dark
 
 # --- Hotkey support (cross-platform) ---
@@ -14,19 +14,20 @@ except ImportError:
 
 
 def capture_and_save(frame):
-    quad = find_largest_quad(frame)
-    if quad is None:
-        print("No page detected. Skipping.")
+    print("Captured frame. Detecting page...")
+    cropped, contour = detect_page(frame)
+    if cropped is None:
+        print("No page detected. Skipping save.")
         return
-    cropped = four_point_transform(frame, quad)
     if is_blurry(cropped):
-        print("Image too blurry. Skipping.")
+        print("Image is too blurry. Skipping save.")
         return
     if is_too_dark(cropped):
-        print("Image too dark. Skipping.")
+        print("Image is too dark. Skipping save.")
         return
-    info = save_capture(frame, cropped)
-    print(f"Saved: {info}")
+    meta = {"note": "Manual capture"}
+    folder = save_capture(frame, cropped, meta)
+    print(f"Saved to {folder}")
 
 
 def main():
