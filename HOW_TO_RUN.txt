@@ -1,0 +1,55 @@
+# How to Run Desk Scanner After Restarting Your Computer
+
+1. **Open Terminal**
+
+2. **Navigate to your project folder:**
+   ```sh
+   cd ~/Desktop/desk_scan
+   ```
+
+3. **(Optional) Activate your Python virtual environment:**
+   If you use a virtual environment, activate it:
+   ```sh
+   source desk_scan/.venv/bin/activate
+   ```
+
+4. **Start the FastAPI backend server:**
+   ```sh
+   uvicorn server:app --reload
+   ```
+   Leave this terminal window open.
+
+5. **Open a new Terminal tab/window**
+
+6. **Start the frontend server:**
+   ```sh
+   cd ~/Desktop/desk_scan/frontend
+   python3 -m http.server 8080
+   ```
+   Leave this terminal window open.
+
+7. **Open your browser and go to:**
+   [http://localhost:8080](http://localhost:8080)
+
+8. **(Optional) To capture new notes/images:**
+   - Open a new Terminal tab/window
+   - Run:
+     ```sh
+     cd ~/Desktop/desk_scan
+     python3 main.py
+     ```
+   - Use the camera window to capture new notes.
+
+---
+
+**Troubleshooting:**
+- If you see blank notes, make sure both servers are running and you are using `http://localhost:8080` in your browser.
+- If you get errors about missing Python packages, install them with:
+  ```sh
+  pip3 install -r requirements.txt
+  ```
+- If you have camera issues, check macOS privacy settings and close other apps using the camera.
+
+---
+
+**You must repeat these steps every time you restart your computer.**
