@@ -38,6 +38,16 @@ class Camera:
         self.release()
         cv2.destroyAllWindows()
 
+import os
+from datetime import datetime
+
 if __name__ == "__main__":
+    def save_capture(frame):
+        os.makedirs("captures", exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"captures/{timestamp}.jpg"
+        cv2.imwrite(filename, frame)
+        print(f"Saved image to {filename}")
+
     cam = Camera()
-    cam.show_stream()
+    cam.show_stream(on_capture_callback=save_capture)

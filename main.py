@@ -19,6 +19,11 @@ def capture_and_save(frame):
     if cropped is None:
         print("No page detected. Skipping save.")
         return
+    # Skip if cropped image is too small (likely a keyboard or not a page)
+    h, w = cropped.shape[:2]
+    if h < 200 or w < 200:
+        print(f"Detected region too small (h={h}, w={w}). Skipping save.")
+        return
     if is_blurry(cropped):
         print("Image is too blurry. Skipping save.")
         return

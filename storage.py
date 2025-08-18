@@ -9,7 +9,7 @@ def ensure_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-def is_blurry(image, threshold=100.0):
+def is_blurry(image, threshold=30.0):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     fm = cv2.Laplacian(gray, cv2.CV_64F).var()
     return fm < threshold
